@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Plus, Upload, Link, Database } from "lucide-react";
+import { Upload, Link, Database } from "lucide-react";
 import { motion } from "framer-motion";
 import { api, todayStr } from "@/lib/ui";
 import { LiquidMetalButton } from "./liquid-metal-button";
@@ -67,7 +67,7 @@ export function UploadCard({ onNoteAdded, onOpenDataManager, onUploadSuccess }: 
   }
 
   const tabs = [
-    { key: "note" as const, label: "Ghi chú", icon: Plus },
+    { key: "note" as const, label: "Ghi chú", icon: undefined },
     { key: "excel" as const, label: "Upload Excel", icon: Upload },
     { key: "sheet" as const, label: "Google Sheet", icon: Link },
   ];
@@ -99,7 +99,7 @@ export function UploadCard({ onNoteAdded, onOpenDataManager, onUploadSuccess }: 
                 }`}
                 onClick={() => setActiveTab(tab.key)}
               >
-                <tab.icon className="size-3.5" />
+                {tab.icon && <tab.icon className="size-3.5" />}
                 <span>{tab.label}</span>
               </motion.button>
             );
@@ -129,7 +129,7 @@ export function UploadCard({ onNoteAdded, onOpenDataManager, onUploadSuccess }: 
       </div>
 
       {/* Content */}
-      <div className="px-4 pb-4">
+      <div className="px-4 pb-4 pt-3">
         {activeTab === "note" && (
           <div className="space-y-3">
             <textarea
@@ -142,7 +142,7 @@ export function UploadCard({ onNoteAdded, onOpenDataManager, onUploadSuccess }: 
             />
             <div className="flex justify-end">
               <LiquidMetalButton
-                label={adding ? "Đang thêm..." : "Ghi chú"}
+                label={adding ? "Đang thêm..." : "Thêm ghi chú"}
                 onClick={handleAddNote}
                 width={160}
               />
