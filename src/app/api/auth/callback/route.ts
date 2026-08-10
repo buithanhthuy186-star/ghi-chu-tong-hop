@@ -27,7 +27,8 @@ export async function GET(req: NextRequest) {
     }),
   });
   if (!tokenRes.ok) {
-    return NextResponse.redirect(new URL("/login?error=token", req.url));
+    const errBody = await tokenRes.text();
+    return NextResponse.redirect(new URL(`/login?error=token&detail=${encodeURIComponent(errBody)}`, req.url));
   }
   const tokens = await tokenRes.json();
 
